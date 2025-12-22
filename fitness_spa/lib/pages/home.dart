@@ -53,120 +53,123 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 40,),
           _dietsSection(),
           SizedBox(height: 40,),
-          Column(
-            crossAxisAlignment: .start,
-            children: [
-              //Popular section
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Text(
-                  'Popular',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  )
-                ),
-              ),
-              SizedBox(height: 15,),
-              ListView.separated(
-                itemCount: popularDiets.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => SizedBox(height: 25,),
-                padding: EdgeInsets.only(left: 20, right: 20),
-                itemBuilder: (context, index) {
-                  return Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 40,
-                          spreadRadius: 0.0,
-                        )
-                      ]
-                    ),
-                    child: Row(
-                      mainAxisAlignment: .spaceBetween,
-
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: SvgPicture.asset(
-                            popularDiets[index].iconPath,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: .start,
-                          mainAxisAlignment: .center,
-                          children: [
-                            Text(
-                              popularDiets[index].name,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '${popularDiets[index].level} | ${popularDiets[index].duration} | ${popularDiets[index].calorie}',
-                              style: TextStyle(
-                                color: Color(0xFF786f72),
-                                fontSize: 13,
-                              )
-                            )
-                          ],
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey
-                              ),
-                              borderRadius: .circular(50)
-                              ),
-                              //? transform the to flip the icon
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Transform.rotate(
-                                  angle: 3.14,
-                                  child: SvgPicture.asset(
-                                    'assets/icons/Arrow - Left 2.svg',
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                              
-                          ),
-                        ),
-                          
-                      ],
-                    )
-                  );
-                },
-
-              ),
-
-              SizedBox(height: 40,)
-            ],
-          ),
+          _popularDietsSection(),
         ]
       )
     );
   }
 
 
+// Formatting helper methods below
 
+  Column _popularDietsSection() {
+    return Column(
+          crossAxisAlignment: .start,
+          children: [
+            //Popular section
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Text(
+                'Popular',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                )
+              ),
+            ),
+            SizedBox(height: 15,),
+            ListView.separated(
+              itemCount: popularDiets.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (context, index) => SizedBox(height: 25,),
+              padding: EdgeInsets.only(left: 20, right: 20),
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: popularDiets[index].boxIsSelected ? Colors.grey.withOpacity(0.3) : Colors.grey.withOpacity(0.1),
+                        blurRadius: 40,
+                        spreadRadius: 0.0,
+                      )
+                    ],
+                    
+                  ),
+                  
+                  child: Row(
+                    mainAxisAlignment: .spaceBetween,
 
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: SvgPicture.asset(
+                          popularDiets[index].iconPath,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: .start,
+                        mainAxisAlignment: .center,
+                        children: [
+                          Text(
+                            popularDiets[index].name,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${popularDiets[index].level} | ${popularDiets[index].duration} | ${popularDiets[index].calorie}',
+                            style: TextStyle(
+                              color: Color(0xFF786f72),
+                              fontSize: 13,
+                            )
+                          )
+                        ],
+                      ),
 
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey
+                            ),
+                            borderRadius: .circular(50)
+                            ),
+                            //? transform the to flip the icon
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Transform.rotate(
+                                angle: 3.14,
+                                child: SvgPicture.asset(
+                                  'assets/icons/Arrow - Left 2.svg',
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                            
+                        ),
+                      ),
+                        
+                    ],
+                  )
+                );
+              },
 
+            ),
+
+            SizedBox(height: 40,)
+          ],
+        );
+  }
 
   Column _dietsSection() {
     return Column(
