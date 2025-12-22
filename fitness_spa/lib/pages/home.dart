@@ -1,4 +1,5 @@
 import 'package:fitness_spa/models/category_model.dart';
+import 'package:fitness_spa/models/diet_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,16 +13,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   List<CategoryModel> categories = [];
+  List<DietModel> diets = [];
+  
 
   void _getCategories() {
     categories = CategoryModel.getCategories();
+  }
+
+  void _getDiets() {
+    diets = DietModel.getDiets();
+  }
+
+  void _getInitialInfo() {
+    categories = CategoryModel.getCategories();
+    diets = DietModel.getDiets();
   }
 
 
 
   @override
   Widget build(BuildContext context) {
-    _getCategories();
+    _getInitialInfo();
     return  Scaffold(
       appBar: appBar(),
       backgroundColor: Colors.white,
@@ -30,11 +42,112 @@ class _HomePageState extends State<HomePage> {
         children: [
           _searchField(),
           SizedBox(height: 40,),
-          _categoriesSection()
+          _categoriesSection(),
+          SizedBox(height: 40,),
+          _dietsSection()
+
         ]
       )
     );
   }
+
+  Column _dietsSection() {
+    return Column(
+          crossAxisAlignment: .start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Text(
+                'Recommedations\nfor Diet',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: .bold,
+                )
+              ),
+            ),
+            SizedBox(height: 15,),
+            Container(
+              height: 240,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: diets.length,
+                separatorBuilder: (context, index) => SizedBox(width: 25,),
+                padding: EdgeInsets.only(left: 20, right: 20),
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 210,
+                    decoration: BoxDecoration(
+                      color: Color(int.parse(categories[index].boxColor)).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(16)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: .spaceEvenly,
+                      children: [
+                        SvgPicture.asset(
+                          diets[index].iconPath,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              diets[index].name,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            
+                            Text(
+                              '${diets[index].level} | ${diets[index].duration} | ${diets[index].calorie}',
+                              style: TextStyle(
+                                color: Color(0xFF786f72),
+                                fontSize: 13,
+                              )
+                            ),
+                          ],
+                        ),
+
+                        Container(
+                          height: 40,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFF9DcEFF),
+                                Color(0xFF92A3FD)
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(50)
+                          ),
+                          child: Center(
+                            child: Text(
+                              'View',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              )
+                            ),
+                          ),
+                        )
+
+                      ],
+                    ),
+              
+                  );
+                }
+              ),
+            ),
+          
+          ],
+          
+        );
+  }
+
+
+
+
 
   Column _categoriesSection() {
     return Column(
