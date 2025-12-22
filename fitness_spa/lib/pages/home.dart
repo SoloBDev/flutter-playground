@@ -1,11 +1,27 @@
+import 'package:fitness_spa/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  List<CategoryModel> categories = [];
+
+  void _getCategories() {
+    categories = CategoryModel.getCategories();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
+    _getCategories();
     return  Scaffold(
       appBar: appBar(),
       backgroundColor: Colors.white,
@@ -14,31 +30,73 @@ class HomePage extends StatelessWidget {
         children: [
           _searchField(),
           SizedBox(height: 40,),
-          Column(
-            crossAxisAlignment: .start,
-            children: [
-              // Categories Sectionr
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Categories',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: .bold,
-                  )
-                ),
-              ),
-              SizedBox(height: 15,),
-              Container(
-                height: 150,
-                color: Colors.green,
-              )
-            ],
-          )
+          _categoriesSection()
         ]
       )
     );
+  }
+
+  Column _categoriesSection() {
+    return Column(
+          crossAxisAlignment: .start,
+          children: [
+            // Categories Sectionr
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                'Categories',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: .bold,
+                )
+              ),
+            ),
+            SizedBox(height: 15,),
+            Container(
+              height: 120,
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                separatorBuilder: (context, index) => SizedBox(width: 25,),
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Color(int.parse(categories[index].boxColor)).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: .spaceEvenly,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset('${categories[index].iconPath}'),
+                          )
+                        ),
+                        Text(
+                          categories[index].name,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              )
+            )
+          ],
+        );
   }
 
   Container _searchField() {
