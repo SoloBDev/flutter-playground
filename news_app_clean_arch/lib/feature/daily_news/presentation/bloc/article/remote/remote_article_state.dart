@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:news_app_clean_arch/feature/daily_news/domain/entities/article.dart';
 
-abstract class RemoteArticleState {
+abstract class RemoteArticlesState {
   final List<ArticleEntity> ? articles;
   final DioException ? error;
 
-  const RemoteArticleState({
+  const RemoteArticlesState({
     this.articles,
     this.error,
   });
@@ -16,14 +16,14 @@ abstract class RemoteArticleState {
 }
 
 
-abstract class RemoteArticleLoading extends RemoteArticleState {
-  const RemoteArticleLoading();
+class RemoteArticlesLoading extends RemoteArticlesState {
+  const RemoteArticlesLoading();
 }
 
-abstract class RemoteArticleDone extends RemoteArticleState {
-  const RemoteArticleDone(List<ArticleEntity> articles) : super(articles: articles);
+class RemoteArticlesDone extends RemoteArticlesState {
+  const RemoteArticlesDone(List<ArticleEntity> articles) : super(articles: articles);
 }
 
-abstract class RemoteArticleError extends RemoteArticleState {
-  const RemoteArticleError( DioException error) : super(error: error);
+class RemoteArticlesError extends RemoteArticlesState {
+  const RemoteArticlesError( DioException error) : super(error: error);
 }
