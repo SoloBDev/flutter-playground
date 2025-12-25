@@ -3,4 +3,7 @@ import 'package:news_app_clean_arch/feature/daily_news/domain/entities/article.d
 
 abstract class ArticleRepository {
   Future<DataState<List<ArticleEntity>>> getAllArticles();
+
+  // before we implement the repository interface, 
+  // we need to create the model class for article entity
 }

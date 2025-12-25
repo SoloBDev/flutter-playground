@@ -7,6 +7,8 @@ import 'package:news_app_clean_arch/feature/daily_news/data/models/article.dart'
 import 'package:news_app_clean_arch/feature/daily_news/domain/repository/article_repository.dart';
 
 class ArticleRepositoryImpl implements ArticleRepository {
+
+  // injecting the NewsApiService instance
   final NewsApiService _newsApiService;
 
   ArticleRepositoryImpl(this._newsApiService);
