@@ -61,7 +61,7 @@ class _NewsApiService implements NewsApiService {
           .map((dynamic i) => ArticleModel.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
+      errorLogger?.logError(e, s, _options, _result);
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
