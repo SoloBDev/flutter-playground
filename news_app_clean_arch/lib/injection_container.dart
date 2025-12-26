@@ -29,8 +29,8 @@ Future<void> initializedDependencies() async {
 
   // Blocs
   // Blocs should be register as factory to get a new instance every time
-  sl.registerFactory<RemoteArticleBloc>(
-    () => RemoteArticleBloc(sl())
+  sl.registerFactory<RemoteArticlesBloc>(
+    () => RemoteArticlesBloc(sl())
   );
 
 
