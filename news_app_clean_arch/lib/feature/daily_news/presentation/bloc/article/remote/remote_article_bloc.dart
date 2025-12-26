@@ -5,10 +5,10 @@ import 'package:news_app_clean_arch/feature/daily_news/presentation/bloc/article
 import 'package:news_app_clean_arch/feature/daily_news/presentation/bloc/article/remote/remote_article_state.dart';
 
 
-class RemoteArticleBloc extends Bloc<RemoteArticleEvent, RemoteArticlesState> {
+class RemoteArticlesBloc extends Bloc<RemoteArticlesEvent, RemoteArticlesState> {
 
   final GetArticleUseCase _getArticleUseCase;
-  RemoteArticleBloc(this._getArticleUseCase) : super(const RemoteArticlesLoading()) {
+  RemoteArticlesBloc(this._getArticleUseCase) : super(const RemoteArticlesLoading()) {
     // register get articles event in the event handler
     on <GetArticles> (onGetArticles);
   }
@@ -20,11 +20,16 @@ class RemoteArticleBloc extends Bloc<RemoteArticleEvent, RemoteArticlesState> {
     final dataState = await _getArticleUseCase();
 
     if(dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      emit(RemoteArticlesDone(dataState.data!));
+      emit(
+        RemoteArticlesDone(dataState.data!)
+      );
     }
 
     if(dataState is DataFailed) {
-      emit(RemoteArticlesError(dataState.error!));
+      print(dataState.error!.message);
+      emit(
+        RemoteArticlesError(dataState.error!)
+      );
     }
 
   }
