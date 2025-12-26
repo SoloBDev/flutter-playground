@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app_clean_arch/feature/daily_news/presentation/bloc/article/remote/remote_article_bloc.dart';
 import 'package:news_app_clean_arch/feature/daily_news/presentation/bloc/article/remote/remote_article_state.dart';
+import 'package:news_app_clean_arch/feature/daily_news/presentation/widgets/article_tile.dart';
 
 class DailyNews extends StatelessWidget {
   const DailyNews({super.key});
@@ -44,13 +45,17 @@ class DailyNews extends StatelessWidget {
           );
         }
         if (state is RemoteArticlesDone) {
+          final articles = state.articles!
+            .where((article) => article != null)
+            .toList();
           return ListView.builder(
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('${index}'),
+              debugPrint('Articles: ${articles[index]}');
+              return ArticleWidget(
+                article: articles[index],
               );
             },
-            itemCount: state.articles!.length,
+            itemCount: articles.length,
 
             );
         }
