@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+// this abstract class communicate with the network calls
 abstract class DataState<T> {
   final T ? data;
   final DioException ? error;

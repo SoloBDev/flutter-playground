@@ -12,10 +12,14 @@ part 'news_api_service.g.dart';
 // and also help us to define the api endpoints and their respective methods
 @RestApi(baseUrl: newsAPIBaseURL)
 abstract class NewsApiService {
-
+  // we will create a factory constructor that accepts a Dio instance
   factory NewsApiService(Dio dio) = _NewsApiService;
 
+  // define an retrofit http annotation for get request to fetch news articles.
   @GET('/top-headlines')
+  // when calling this method we pass the required query parameters to it.
+  // in this abstr acted method we're basically telling the retrofit to generate a method for us
+  // that can internally uses the dio instance to make a get network call to an endpoint /top-headlines
   Future<HttpResponse<List<ArticleModel>>> getNewsArticles({
     @Query('apiKey') String ? apiKey,
     @Query('country') String ? country,

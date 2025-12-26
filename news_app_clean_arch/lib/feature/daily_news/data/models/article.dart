@@ -11,7 +11,16 @@ class ArticleModel extends ArticleEntity {
     String ? publishedAt,
     String ? content,
 
-  });
+  }) : super(
+          id: id,
+          author: author,
+          title: title,
+          description: description,
+          url: url,
+          urlToImage: urlToImage,
+          publishedAt: publishedAt,
+          content: content,
+        );
 
 
   // Create a Factory method to parse json data and return ArticleModel object, using "From Json" convention
